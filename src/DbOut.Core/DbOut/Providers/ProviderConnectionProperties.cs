@@ -5,13 +5,13 @@ namespace DbOut.Providers;
 
 public sealed class ProviderConnectionProperties
 {
-    private readonly ConnectionSpec _connectionSpec;
+    private readonly ConnectionOptions _connectionOptions;
     private readonly IReadOnlyDictionary<string, string> _properties;
 
-    public ProviderConnectionProperties(ConnectionSpec connectionSpec)
+    public ProviderConnectionProperties(ConnectionOptions connectionOptions)
     {
-        _connectionSpec = connectionSpec;
-        _properties = _connectionSpec.Properties ?? throw ExceptionResources.NoConnectionProperties(connectionSpec);
+        _connectionOptions = connectionOptions;
+        _properties = _connectionOptions.Properties ?? throw ExceptionResources.NoConnectionProperties(connectionOptions);
     }
 
     public string GetProperty(string key, bool required = false) => GetProperty(key, required, str => str)!;
@@ -28,7 +28,7 @@ public sealed class ProviderConnectionProperties
         
         if (required)
         {
-            throw ExceptionResources.MissingRequiredConnectionProperty(_connectionSpec, key);
+            throw ExceptionResources.MissingRequiredConnectionProperty(_connectionOptions, key);
         }
 
         return defaultValue;
@@ -42,7 +42,7 @@ public sealed class ProviderConnectionProperties
         }
         catch (Exception)
         {
-            throw ExceptionResources.InvalidConnectionPropertyConversion<T>(_connectionSpec, key, value);
+            throw ExceptionResources.InvalidConnectionPropertyConversion<T>(_connectionOptions, key, value);
         }
     }
 }

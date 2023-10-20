@@ -10,5 +10,5 @@ public interface IDataProvider
 {
     string Provider { get; }
 
-    IDbConnection CreateConnection(ConnectionSpec connectionSpec);
+    IDbConnection CreateConnection(ConnectionOptions connectionOptions);
 }

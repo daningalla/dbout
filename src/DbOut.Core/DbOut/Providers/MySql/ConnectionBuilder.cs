@@ -5,21 +5,21 @@ namespace DbOut.Providers.MySql;
 
 internal static class ConnectionBuilder
 {
-    internal static MySqlConnection Create(ConnectionSpec connectionSpec)
+    internal static MySqlConnection Create(ConnectionOptions connectionOptions)
     {
-        var connectionString = connectionSpec.ConnectionString ?? CreateConnectionString(connectionSpec);
+        var connectionString = connectionOptions.ConnectionString ?? CreateConnectionString(connectionOptions);
         return new MySqlConnection(connectionString);
     }
 
-    private static string CreateConnectionString(ConnectionSpec connectionSpec)
+    private static string CreateConnectionString(ConnectionOptions connectionOptions)
     {
-        return connectionSpec.ConnectionString
-               ?? CreateConnectionStringFromProperties(connectionSpec);
+        return connectionOptions.ConnectionString
+               ?? CreateConnectionStringFromProperties(connectionOptions);
     }
 
-    private static string CreateConnectionStringFromProperties(ConnectionSpec connectionSpec)
+    private static string CreateConnectionStringFromProperties(ConnectionOptions connectionOptions)
     {
-        var properties = new ProviderConnectionProperties(connectionSpec);
+        var properties = new ProviderConnectionProperties(connectionOptions);
 
         return new MySqlConnectionStringBuilder
         {

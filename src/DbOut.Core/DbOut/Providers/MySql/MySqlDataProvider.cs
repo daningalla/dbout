@@ -13,8 +13,8 @@ public sealed class MySqlDataProvider : IDataProvider
     public string Provider => typeof(MySqlConnection).FullName ?? nameof(MySqlConnection);
 
     /// <inheritdoc />
-    public IDbConnection CreateConnection(ConnectionSpec connectionSpec)
+    public IDbConnection CreateConnection(ConnectionOptions connectionOptions)
     {
-        return ConnectionBuilder.Create(connectionSpec);
+        return ConnectionBuilder.Create(connectionOptions);
     }
 }

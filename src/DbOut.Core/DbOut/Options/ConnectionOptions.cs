@@ -3,7 +3,7 @@
 /// <summary>
 /// Describes a connection.
 /// </summary>
-public class ConnectionSpec
+public class ConnectionOptions
 {
     public required string Provider { get; init; }
     public required string Key { get; init; }
