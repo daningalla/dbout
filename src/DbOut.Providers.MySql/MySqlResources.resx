@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="InformationQueryStatement" xml:space="preserve">
+        <value>select COLUMN_NAME, ORDINAL_POSITION, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE, COLUMN_KEY
+from INFORMATION_SCHEMA.COLUMNS
+where TABLE_SCHEMA=@schema AND TABLE_NAME=@table</value>
+    </data>
+    <data name="WatermarkValueQueryStatement" xml:space="preserve">
+        <value>select t_span.*
+from (
+	select t_sorted.*
+	from (
+		select $(column)
+		from $(schema).$(table)
+		order by $(column)
+	) t_sorted
+	offset @offset
+) t_span
+limit 1</value>
+    </data>
+    <data name="OffsetQueryStatement" xml:space="preserve">
+        <value>select t_span.*
+from (
+	select t_sorted.*
+	from (
+		select $(column-list)
+		from $(schema).$(table)
+		order by $(watermark-column)
+	) t_sorted	
+	limit @limit offset @offset	
+) t_span</value>
+    </data>
+</root>

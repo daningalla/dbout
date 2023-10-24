@@ -10,5 +10,9 @@
   <ItemGroup>
     <ProjectReference Include="..\DbOut.Core\DbOut.Core.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="vertical-pipelines-dependencyinjection" Version="1.1.3" />
+  </ItemGroup>
 
 </Project>

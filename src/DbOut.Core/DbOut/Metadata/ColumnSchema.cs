@@ -1,47 +1,83 @@
+﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
+
 namespace DbOut.Metadata;
 
 /// <summary>
-/// Defines a column schema.
+/// Represents the column schema for a table.
 /// </summary>
-public class ColumnSchema
+public sealed class ColumnSchema : IEnumerable<ColumnMetadata>
 {
-    /// <summary>
-    /// Gets the column name.
-    /// </summary>
-    public required string ColumnName { get; init; }
-    
-    /// <summary>
-    /// Gets the ordinal position.
-    /// </summary>
-    public required int OrdinalPosition { get; init; }
-    
-    /// <summary>
-    /// Gets the data type.
-    /// </summary>
-    public required Type DataType { get; init; }
-    
-    /// <summary>
-    /// Gets the type with null annotation (struct types only).
-    /// </summary>
-    public required Type? NullAnnotatedDataType { get; init; }
-    
-    /// <summary>
-    /// Gets the column key type.
-    /// </summary>
-    public required ColumnKeyType KeyType { get; init; }
-    
-    /// <summary>
-    /// Gets whether the column is nullable.
-    /// </summary>
-    public required bool IsNullable { get; init; }
-    
-    /// <summary>
-    /// Gets the maximum length.
-    /// </summary>
-    public required int? MaximumLength { get; init; }
+    private readonly Dictionary<string, ColumnMetadata> _columnNameIndex;
 
-    public override string ToString() => $"{ColumnName}:{DataType}{LengthDisplay}{NullableDisplay}";
+    /// <summary>
+    /// Creates a new instance of this type
+    /// </summary>
+    public ColumnSchema(
+        string schemaName,
+        string tableName,
+        IEnumerable<ColumnMetadata> columnMetadata)
+    {
+        SchemaName = schemaName;
+        TableName = tableName;
+        Columns = columnMetadata.OrderBy(c => c.OrdinalPosition).ToArray();
+        _columnNameIndex = Columns.ToDictionary(c => c.ColumnName);
+    }
 
-    private string LengthDisplay => MaximumLength.HasValue ? $"({MaximumLength}) " : string.Empty;
-    private string NullableDisplay => IsNullable ? "nullable" : "not nullable";
+    /// <summary>
+    /// Gets the schema.
+    /// </summary>
+    public string SchemaName { get; }
+
+    /// <summary>
+    /// Gets the table name.
+    /// </summary>
+    public string TableName { get; }
+
+    /// <summary>
+    /// Tries to get a column.
+    /// </summary>
+    /// <param name="columnName">Column name.</param>
+    /// <param name="columnMetadata">Metadata if the column name was found.</param>
+    /// <returns><c>true</c> if the column was found.</returns>
+    public bool TryGetColumn(string columnName, [NotNullWhen(true)] out ColumnMetadata? columnMetadata)
+    {
+        return _columnNameIndex.TryGetValue(columnName, out columnMetadata);
+    }
+
+    /// <summary>
+    /// Gets the unique schema id.
+    /// </summary>
+    public Guid SchemaId { get; } = Guid.NewGuid();
+
+    /// <summary>
+    /// Gets a column by index.
+    /// </summary>
+    /// <param name="index"></param>
+    public ColumnMetadata this[int index] => Columns[index];
+
+    /// <summary>
+    /// Gets a column by name.
+    /// </summary>
+    /// <param name="columnName"></param>
+    public ColumnMetadata this[string columnName] => _columnNameIndex[columnName];
+    
+    /// <summary>
+    /// Gets the columns.
+    /// </summary>
+    public IReadOnlyList<ColumnMetadata> Columns { get; }
+
+    /// <summary>
+    /// Gets the column count.
+    /// </summary>
+    public int Count => Columns.Count();
+
+    /// <inheritdoc />
+    public IEnumerator<ColumnMetadata> GetEnumerator() => Columns.GetEnumerator();
+
+    /// <inheritdoc />
+    public override string ToString() => "count={Columns.Count}";
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

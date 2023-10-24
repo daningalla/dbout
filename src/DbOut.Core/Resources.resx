@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+	<data name="CreateRestorePointSchemaStatement" xml:space="preserve">
+		<value>create table if not exists engine_version(
+	Id text not null
+);
+create table if not exists job_parameters(
+	Id text not null primary key,
+	Hash text not null,
+	Parameters text not null
+);
+create table if not exists cache_files(
+	Id text not null primary key,
+	QueryHash text not null,
+	SubsetId integer not null,
+	FilePath text not null,
+	FileType text not null,
+	CompressionType int not null,
+	QueryCount int not null,
+	ActualCount int not null,
+	CommitOffset int not null,
+	MergeOffset int not null,
+	ContentHash text not null,
+	SizeInBytes not null
+);
+create unique index if not exists cache_files_queryhash_subsetid
+on cache_files(QueryHash,SubsetId);
+create index if not exists cache_files_queryhash
+on cache_files(QueryHash);
+create table if not exists telemetry_counters(
+	Key text not null primary key,
+	Value int not null
+);
+create table if not exists telemetry_numerics(
+	Key text not null primary key,
+	Min real not null,
+	Max real not null,
+	MeanCount integer not null,
+	MeanTotal real not null,
+	Value real not null
+);
+create table if not exists telemetry_kvs(
+	Key text not null,
+	Type text not null,
+	Value text not null,
+	PRIMARY KEY(Key, Type)
+);
+create table if not exists job_snapshot(
+	Id text not null PRIMARY KEY,
+	CommittedOffset integer not null
+);
+insert into engine_version(Id) select '1.0.0';</value>
+	</data>
+	<data name="InsertCacheFileDescriptorStatement" xml:space="preserve">
+		<value>insert into cache_files(Id,QueryHash,SubsetId,FilePath,FileType,CompressionType,QueryCount,ActualCount,CommitOffset,MergeOffset,ContentHash,SizeInBytes)
+values (@Id,@QueryHash,@SubsetId,@FilePath,@FileType,@CompressionType,@QueryCount,@ActualCount,@CommitOffset,@MergeOffset,@ContentHash,@SizeInBytes);</value>
+	</data>
+	<data name="InsertTelemetryCounterStatement" xml:space="preserve">
+		<value>insert into telemetry_counters (Key, Value)
+values (@Key, @Value);</value>
+	</data>
+	<data name="InsertTelemetryNumericStatement" xml:space="preserve">
+		<value>insert into telemetry_numerics (Key,Min,Max,MeanCount,MeanTotal,Value)
+values (@Key,@Min,@Max,@MeanCount,@MeanTotal,@Value);</value>
+	</data>
+	<data name="InsertTelemetryKeyValueStatement" xml:space="preserve">
+		<value>insert into telemetry_kvs (Key,Type,Value)
+values (@Key,@Type,@Value);</value>
+	</data>
+	<data name="DeleteTelemetryStatement" xml:space="preserve">
+		<value>delete from telemetry_counters;
+delete from telemetry_numerics;
+delete from telemetry_kvs;</value>
+	</data>
+	<data name="DeleteCacheFileDescriptorStatement" xml:space="preserve">
+		<value>delete from cache_files where Id=@Id</value>
+	</data>
+	<data name="InsertJobParametersStatement" xml:space="preserve">
+		<value>insert or ignore into job_parameters(Id,Hash,Parameters) 
+values('9e905e95-cbab-4c4f-b26a-241ea554812f',@Hash,@Parameters);</value>
+	</data>
+	<data name="UpsertJobSnapshotStatement" xml:space="preserve">
+		<value>insert or replace into job_snapshot
+values ('9e905e95-cbab-4c4f-b26a-241ea554812f',@CommittedOffset);</value>
+	</data>
+	<data name="SelectJobSnapshotStatement" xml:space="preserve">
+		<value>select CommittedOffset from job_snapshot
+where Id='9e905e95-cbab-4c4f-b26a-241ea554812f';</value>
+	</data>
+	<data name="SelectJobParametersStatement" xml:space="preserve">
+		<value>select Hash,Parameters
+from job_parameters
+where id='9e905e95-cbab-4c4f-b26a-241ea554812f';</value>
+	</data>
+	<data name="SelectCacheFileDescriptorStatement" xml:space="preserve">
+		<value>select *
+from cache_files
+where QueryHash=@queryHash;</value>
+	</data>
+	<data name="SelectTelemetryStatement" xml:space="preserve">
+		<value>select * from telemetry_counters;
+select * from telemetry_numerics;
+select * from telemetry_kvs;</value>
+	</data>
+</root>

@@ -1,0 +1,44 @@
+2023-10-22 01:20:33.470 -06:00 [VRB] Resolved token MYSQL_CONNECTION using token source DbOut.Options.EnvironmentVariableTokenSource
+2023-10-22 01:20:33.480 -06:00 [VRB] Resolved token UserProfile using token source DbOut.Options.EnvironmentVariableTokenSource
+2023-10-22 01:20:33.481 -06:00 [VRB] Runtime options provided by DbOut.Console.RuntimeOptionsAdapter
+2023-10-22 01:20:33.483 -06:00 [VRB] Command mode = "Execute"
+2023-10-22 01:20:33.485 -06:00 [DBG] Task ListProvidersTask skipped.
+2023-10-22 01:20:33.487 -06:00 [DBG] Validating data provider options
+2023-10-22 01:20:33.488 -06:00 [VRB] Added runtime service DbOut.Providers.IDatabaseProvider
+2023-10-22 01:20:33.489 -06:00 [INF] Validated database provider MySqlDatabaseProvider
+2023-10-22 01:20:33.492 -06:00 [VRB] Creating MySql connection context
+2023-10-22 01:20:33.510 -06:00 [VRB] Mapped value '60' to MySqlConnectionStringBuilder.DefaultCommandTimeout with conversion to RuntimePropertyInfo.
+2023-10-22 01:20:33.517 -06:00 [VRB] Connecting to MySqlDatabaseProvider:localhost/db_export
+2023-10-22 01:20:33.650 -06:00 [VRB] Connection opened
+2023-10-22 01:20:33.655 -06:00 [VRB] Executing SQL query (provider=MySqlConnector.MySqlConnection)
+Statement: SELECT 1
+Parameters: null
+2023-10-22 01:20:33.703 -06:00 [VRB] Result count = 1
+2023-10-22 01:20:33.706 -06:00 [VRB] Added runtime service DbOut.Providers.IConnectionContext
+2023-10-22 01:20:33.706 -06:00 [INF] Connection health check complete.
+2023-10-22 01:20:33.708 -06:00 [VRB] Added runtime service DbOut.IO.FileSystem
+2023-10-22 01:20:33.709 -06:00 [VRB] Added runtime service DbOut.IO.IFileSystem -> DbOut.IO.FileSystem
+2023-10-22 01:20:33.710 -06:00 [INF] File system initialized.
+2023-10-22 01:20:33.711 -06:00 [VRB] Added runtime service DbOut.Continuation.IRestorePoint
+2023-10-22 01:20:33.712 -06:00 [INF] Created restore point.
+{"@t":"2023-10-22T07:35:07.6503781Z","@mt":"Resolved token {token} using token source {source}","@l":"Verbose","token":"MYSQL_CONNECTION","source":"DbOut.Options.EnvironmentVariableTokenSource","SourceContext":"DbOut.Options.CompositeTokenProvider"}
+{"@t":"2023-10-22T07:35:07.6779052Z","@mt":"Resolved token {token} using token source {source}","@l":"Verbose","token":"UserProfile","source":"DbOut.Options.EnvironmentVariableTokenSource","SourceContext":"DbOut.Options.CompositeTokenProvider"}
+{"@t":"2023-10-22T07:35:07.6790401Z","@mt":"Runtime options provided by {type}","@l":"Verbose","type":"DbOut.Console.RuntimeOptionsAdapter","SourceContext":"DbOut.Engine.DbOutEngine"}
+{"@t":"2023-10-22T07:35:07.6796979Z","@mt":"Command mode = {mode}","@l":"Verbose","mode":"Execute","SourceContext":"DbOut.Engine.DbOutEngine"}
+{"@t":"2023-10-22T07:35:07.6812878Z","@mt":"Task {task} skipped.","@l":"Debug","task":"ListProvidersTask","SourceContext":"DbOut.Engine.Pipeline.ListProvidersTask"}
+{"@t":"2023-10-22T07:35:07.6827252Z","@mt":"Validating data provider options","@l":"Debug","SourceContext":"DbOut.Engine.Pipeline.ValidateDatabaseProviderTask"}
+{"@t":"2023-10-22T07:35:07.6846797Z","@mt":"Added runtime service {type}","@l":"Verbose","type":"DbOut.Providers.IDatabaseProvider","SourceContext":"DbOut.Services.RuntimeServices"}
+{"@t":"2023-10-22T07:35:07.6854641Z","@mt":"Validated database provider {provider}","provider":"MySqlDatabaseProvider","SourceContext":"DbOut.Engine.Pipeline.ValidateDatabaseProviderTask"}
+{"@t":"2023-10-22T07:35:07.6871571Z","@mt":"Creating MySql connection context","@l":"Verbose","SourceContext":"DbOut.Providers.MySql.MySqlDatabaseProvider"}
+{"@t":"2023-10-22T07:35:07.7016796Z","@mt":"Mapped value '{value}' to {propertyName} with conversion to {propertyType}.","@l":"Verbose","value":"60","propertyName":"MySqlConnectionStringBuilder.DefaultCommandTimeout","propertyType":"RuntimePropertyInfo","SourceContext":"DbOut.Providers.MySql.MySqlConnectionContext","id":"f322af","Scope":["MySql f322af"]}
+{"@t":"2023-10-22T07:35:07.7085856Z","@mt":"Connecting to {provider}:{server}/{database}","@l":"Verbose","provider":"MySqlDatabaseProvider","server":"localhost","database":"db_export","SourceContext":"DbOut.Providers.MySql.MySqlConnectionContext","id":"f322af","Scope":["MySql f322af"]}
+{"@t":"2023-10-22T07:35:07.8510395Z","@mt":"Connection opened","@l":"Verbose","SourceContext":"DbOut.Providers.MySql.MySqlConnectionContext","id":"f322af","Scope":["MySql f322af"]}
+{"@t":"2023-10-22T07:35:07.8561391Z","@mt":"Executing SQL query (provider={provider})\nStatement: {sqk}\nParameters: {@parameters}","@l":"Verbose","provider":"MySqlConnector.MySqlConnection","sqk":"SELECT 1","parameters":null,"SourceContext":"DbOut.Providers.MySql.MySqlConnectionContext","id":"f322af","Scope":["MySql f322af"]}
+{"@t":"2023-10-22T07:35:07.9106369Z","@mt":"Result count = {count}","@l":"Verbose","count":1,"SourceContext":"DbOut.Providers.MySql.MySqlConnectionContext","id":"f322af","Scope":["MySql f322af"]}
+{"@t":"2023-10-22T07:35:07.9135142Z","@mt":"Added runtime service {type}","@l":"Verbose","type":"DbOut.Providers.IConnectionContext","SourceContext":"DbOut.Services.RuntimeServices"}
+{"@t":"2023-10-22T07:35:07.9142807Z","@mt":"Connection health check complete.","SourceContext":"DbOut.Engine.Pipeline.ValidateConnectionOptions"}
+{"@t":"2023-10-22T07:35:07.9162237Z","@mt":"Added runtime service {type}","@l":"Verbose","type":"DbOut.IO.FileSystem","SourceContext":"DbOut.Services.RuntimeServices"}
+{"@t":"2023-10-22T07:35:07.9168932Z","@mt":"Added runtime service {interface} -> {type}","@l":"Verbose","interface":"DbOut.IO.IFileSystem","type":"DbOut.IO.FileSystem","SourceContext":"DbOut.Services.RuntimeServices"}
+{"@t":"2023-10-22T07:35:07.9174975Z","@mt":"File system initialized.","SourceContext":"DbOut.Engine.Pipeline.PrepareFileSystemTask"}
+{"@t":"2023-10-22T07:35:07.9190836Z","@mt":"Added runtime service {type}","@l":"Verbose","type":"DbOut.Continuation.IRestorePoint","SourceContext":"DbOut.Services.RuntimeServices"}
+{"@t":"2023-10-22T07:35:07.9197031Z","@mt":"Created restore point.","SourceContext":"DbOut.Engine.Pipeline.InitializeQueryEngineTask"}

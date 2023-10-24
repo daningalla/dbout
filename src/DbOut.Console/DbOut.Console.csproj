@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DbOut.Engine\DbOut.Engine.csproj" />
+    <ProjectReference Include="..\DbOut.Providers.MySql\DbOut.Providers.MySql.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="vertical-commandline" Version="2.4.0" />
+    <PackageReference Include="vertical-spectreconsolelogger" Version="0.10.1-dev.20230901.27" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>
