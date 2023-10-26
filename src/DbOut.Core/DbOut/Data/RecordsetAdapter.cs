@@ -9,12 +9,15 @@ public static class RecordsetAdapter
         DbDataReader dataReader, 
         ColumnSchema columnSchema,
         RecordsetBuffer recordsetBuffer,
+        Action<DbDataReader>? sampleFunction,
         CancellationToken cancellationToken)
     {
         var rowsRead = 0;
 
         if (!await dataReader.ReadAsync(cancellationToken)) 
             return recordsetBuffer.CreateRecordset(columnSchema, rowsRead);
+        
+        sampleFunction?.Invoke(dataReader);
         
         var columnCount = dataReader.FieldCount;
         var array = recordsetBuffer.Array;

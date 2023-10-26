@@ -32,7 +32,9 @@ public class QuerySchemaTask : CommandTask
         var selectionPredicate = new Predicate<string>(columnName =>
         {
             var select = (datasource.SelectColumns is { Length: > 0 } && datasource.SelectColumns.Contains(columnName))
-                         || datasource.SelectColumns == null || datasource.SelectColumns.Length == 0;
+                         || datasource.SelectColumns == null 
+                         || datasource.SelectColumns.Length == 0
+                         || datasource.SelectColumns.SingleOrDefault() == "*";
             var exclude = datasource.ExcludedColumns is { Length: > 0 } &&
                           datasource.ExcludedColumns.Contains(columnName);
             var result = select && !exclude;

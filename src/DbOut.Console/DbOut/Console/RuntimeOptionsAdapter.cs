@@ -31,7 +31,7 @@ public class RuntimeOptionsAdapter : IOptions<RuntimeOptions>
             DataSource = BuildDataSourceOptions(arguments),
             OutputPath = arguments.OutputPath,
             Parallelization = BuildParallelizationOptions(arguments),
-            Clean = arguments.Clean
+            Clean = arguments.CleanMode != CleanConfirmMode.None
         };
     }
 

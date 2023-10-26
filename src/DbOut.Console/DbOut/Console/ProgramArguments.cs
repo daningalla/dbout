@@ -35,5 +35,5 @@ public class ProgramArguments
     public List<int> CommandRetryIntervals { get; } = new();
     public int OutputFlushIntervalSeconds { get; set; } = 5;
     public OutputFormat OutputFormat { get; set; } = OutputFormat.Parquet;
-    public bool Clean { get; set; }
+    public CleanConfirmMode CleanMode { get; set; }
 }

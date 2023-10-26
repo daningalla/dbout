@@ -108,7 +108,7 @@ internal class ColumnSchemaBuilder
         switch (dataType)
         {
             case "tinyint":
-                return ValueConverter.Create(isNullable, src => src != 0, src => Convert.ToSByte(Convert.ToBoolean(src)));
+                return ValueConverter.Create<bool>(isNullable, bool.Parse);
             case "smallint":
                 return ValueConverter.Create(isNullable, short.Parse);
             case "int":

@@ -1,4 +1,5 @@
-﻿using DbOut.Data;
+﻿using System.Data.Common;
+using DbOut.Data;
 using DbOut.Metadata;
 using DbOut.Options;
 using DbOut.Reporting;
@@ -9,6 +10,7 @@ namespace DbOut.Providers.MySql.Internal;
 
 internal sealed class OffsetDataQuery
 {
+    private static int LogFirstRow;
     private readonly ILogger _logger;
     private readonly ConnectionFactory _connectionFactory;
     private readonly DataSourceOptions _datasource;
@@ -70,7 +72,6 @@ internal sealed class OffsetDataQuery
                 _telemetryListener.Increment($"MySql.Exceptions.{exception.GetType().Name}");
             });
 
-        // TODO: Remove
         await using var reader = await policy.ExecuteAsync(() => command.ExecuteReaderAndLogAsync(
             _logger, cancellationToken));
 
@@ -78,10 +79,28 @@ internal sealed class OffsetDataQuery
             reader,
             _columnSchema,
             _recordsetBufferPool.GetInstance(),
+            LoadSampleReaderRow,
             cancellationToken);
 
         _logger.LogDebug("Query command read {count} rows.", result.RowCount);
         
         return result;
+    }
+
+    private void LoadSampleReaderRow(DbDataReader reader)
+    {
+        if (Interlocked.Increment(ref LogFirstRow) != 1)
+            return;
+
+        using var _ = _logger.BeginScope("Source metadata");
+        
+        for (var c = 0; c < reader.FieldCount; c++)
+        {
+            var fieldType = reader.GetFieldType(c);
+            _logger.LogTrace("{ordinal} {name} = {type}",
+                c+1,
+                reader.GetName(c),
+                fieldType.Name);
+        }
     }
 }

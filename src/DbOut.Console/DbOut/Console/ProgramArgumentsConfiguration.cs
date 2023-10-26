@@ -45,7 +45,7 @@ public class ProgramArgumentsConfiguration : ApplicationConfiguration<ProgramArg
         Option<int>("--max-rows", arg => arg.Map.ToProperty(opt => opt.MaxRows).Validate.Greater(0));
         Option<OutputFormat>("--out-format", arg => arg.Map.ToProperty(opt => opt.OutputFormat));
         Option<int>("--out-flush-interval", arg => arg.Map.ToProperty(opt => opt.OutputFlushIntervalSeconds));
-        Switch("--clean", arg => arg.Map.ToProperty(opt => opt.Clean));
+        Option<CleanConfirmMode>("--clean", arg => arg.Map.ToProperty(opt => opt.CleanMode));
     }
 
     private static void MapColumnSet(HashSet<string> set, string value)
